@@ -1,1 +1,0 @@
-peg sshcmd-node kfc 1 "python3 /home/ubuntu/eye_of_sauron/run_producers.py"

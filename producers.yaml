@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: producers
+  labels:
+    app: producers
+    tier: producers
+spec:
+  # modify replicas according to your case
+  replicas: 4
+  selector:
+    matchLabels:
+      tier: producers
+  template:
+    metadata:
+      labels:
+        tier: producers
+    spec:
+      containers:
+      - name: producers
+        image: quangdaist123/kafka_confluent:producers

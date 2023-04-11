@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: ubuntu
+  labels:
+    app: ubuntu
+spec:
+  containers:
+  - image: amazon/aws-cli 
+    command:
+      - "sleep"
+      - "604800"
+    imagePullPolicy: IfNotPresent
+    name: ubuntu
+    volumeMounts:
+      - mountPath: /workspace/train/datasets/
+        name: efs-data
+      - mountPath: /dev/shm
+        name: dshm
+
+  volumes:
+  - name: efs-data
+    persistentVolumeClaim:
+      claimName: efs-claim
+  - emptyDir:
+      medium: Memory
+    name: dshm

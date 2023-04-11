@@ -1,0 +1,52 @@
+apiVersion: "kubeflow.org/v1"
+kind: PyTorchJob
+metadata:
+  name: yolov7-training
+spec:
+  elasticPolicy:
+    rdzvBackend: c10d
+    minReplicas: 1
+    maxReplicas: 2
+    maxRestarts: 100
+  pytorchReplicaSpecs:
+    Worker:
+      replicas: 2
+      restartPolicy: OnFailure
+      template:
+        spec:
+          containers:
+             # Need to be pytorch only as Kubeflow operator uses this. Renaming this doesn't start the job
+            - name: pytorch
+              image: quangdaist123/dai_yolov7:demo
+              imagePullPolicy: IfNotPresent
+              env:
+              - name: LOGLEVEL
+                value: DEBUG
+              command:
+                - python
+                - -m
+                - torch.distributed.run
+                - "--nproc_per_node=1"
+                - yolov5/train.py
+                - --epochs=20
+                - --batch-size=48
+                - "--data=yolov5/data/mydataset.yaml"
+                - "--weights=yolov5/yolov5s.pt"
+                - "--project=/workspace/train/datasets/"
+                - "--name=result_single_gpu"
+              resources:
+               limits:
+                 nvidia.com/gpu: 1
+              volumeMounts:
+                - mountPath: /workspace/train/datasets/
+                  name: efs-data
+                - mountPath: /dev/shm
+                  name: dshm
+
+          volumes:
+          - name: efs-data
+            persistentVolumeClaim:
+              claimName: efs-claim
+          - emptyDir:
+              medium: Memory
+            name: dshm

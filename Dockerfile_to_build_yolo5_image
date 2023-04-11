@@ -1,0 +1,15 @@
+FROM pytorch/pytorch:1.9.0-cuda10.2-cudnn7-devel
+RUN mkdir train
+WORKDIR train
+COPY yolov5 yolov5
+
+RUN apt-key add yolov5/3bf863cc.pub \
+        && apt-key add yolov5/7fa2af80.pub \
+        && apt-get update \
+        && apt-get install ffmpeg libsm6 libxext6 git -y \
+        && apt-get update && apt-get install libgl1
+
+#Optional. I prefer creating this so that its easy to track root path for mounting 
+RUN pip install -r yolov5/requirements.txt \
+        && pip install torch==1.9.0+cu102 torchvision==0.10.0+cu102 torchaudio==0.9.0 -f https://download.pytorch.org/whl/torch_stable.html
+ENTRYPOINT ["python", "-m", "torch.distributed.run"]

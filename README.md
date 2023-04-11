@@ -1,3 +1,20 @@
+The workflow:
+We transfer the data from S3 to EFS. Then we mount an EFS storage to the Pod that hosts the training code—that way, the code can reach the remote training data.
+
+begin{enumerate}
+  \item \textbf{Transfer the data from S3 to EFS}: As an EFS can only be accessed when mounted to an external Linux instance (local or on-the-cloud), we create a Transfer pod that runs the AWS CLI container image. Then we access that Pod and use AWS CLI to copy the data from S3 to EFS.
+  \item \textbf{Install EFS Container Storage Interface (CSI) driver}: It allows Kubernetes clusters running on AWS to manage the lifecycle of Amazon EFS file systems. First, we create an IAM policy and role with EFS access; then we attach them to the Kubernetes service account.
+  \item \textbf{Create a PersistentVolume (PV) on EKS}: After creating an EFS, we can access the storage in an ESK cluster under the form of a PersistentVolume. PVs are volume plugins like Volumes but have a lifecycle independent of any individual Pod that uses the PV.
+  \item \textbf{Create a PersistentVolumeClaim (PVC) on EKS}: To enable pods to mount the existing EFS PV, we bound the PV to a PVC. A PersistentVolumeClaim (PVC) is a request for storage by a user. While pods consume node resources and PVCs consume PV resources.
+\end{enumerate}
+
+
+
+
+
+
+
+-----------
 <h1 align="center">
   <br>
   <a href="https://youtu.be/3wrseXG_6Qw"><img src="/data/logo.png" alt="The Eye of Sauron" width="200"></a>
