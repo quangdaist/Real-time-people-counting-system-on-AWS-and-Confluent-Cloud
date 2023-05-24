@@ -7,7 +7,7 @@ In this work, we built a scalable, elastic, and distributed system to effectivel
 ## Architecture
 
 <p align="center">
-<img src="https://raw.githubusercontent.com/quangdaist01/Real-time-people-counting-system-on-AWS-and-Confluent-Cloud/master/fig/DS104.drawio.png" alt="demo" width="550"/>
+<img src="https://raw.githubusercontent.com/quangdaist01/Real-time-people-counting-system-on-AWS-and-Confluent-Cloud/master/fig/DS104.drawio.png" alt="demo" width="450"/>
 </p>
 
 ## Tools
