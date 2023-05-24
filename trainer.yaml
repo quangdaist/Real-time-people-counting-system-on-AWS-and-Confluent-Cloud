@@ -1,7 +1,7 @@
 apiVersion: "kubeflow.org/v1"
 kind: PyTorchJob
 metadata:
-  name: yolov7-training
+  name: yolov5-training
 spec:
   elasticPolicy:
     rdzvBackend: c10d
@@ -15,13 +15,13 @@ spec:
       template:
         spec:
           containers:
-             # Need to be pytorch only as Kubeflow operator uses this. Renaming this doesn't start the job
+            # Need to be pytorch only as Kubeflow operator uses this. Renaming this doesn't start the job
             - name: pytorch
-              image: quangdaist123/dai_yolov7:demo
+              image: quangdaist123/dai_yolov5:demo
               imagePullPolicy: IfNotPresent
               env:
-              - name: LOGLEVEL
-                value: DEBUG
+                - name: LOGLEVEL
+                  value: DEBUG
               command:
                 - python
                 - -m
@@ -35,8 +35,8 @@ spec:
                 - "--project=/workspace/train/datasets/"
                 - "--name=result_single_gpu"
               resources:
-               limits:
-                 nvidia.com/gpu: 1
+                limits:
+                  nvidia.com/gpu: 1
               volumeMounts:
                 - mountPath: /workspace/train/datasets/
                   name: efs-data
@@ -44,9 +44,9 @@ spec:
                   name: dshm
 
           volumes:
-          - name: efs-data
-            persistentVolumeClaim:
-              claimName: efs-claim
-          - emptyDir:
-              medium: Memory
-            name: dshm
+            - name: efs-data
+              persistentVolumeClaim:
+                claimName: efs-claim
+            - emptyDir:
+                medium: Memory
+              name: dshm
