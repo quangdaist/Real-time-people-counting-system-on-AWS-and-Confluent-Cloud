@@ -6,7 +6,9 @@ In this work, we built a scalable, elastic, and distributed system to effectivel
 
 ## Architecture
 
-![The architecture of our proposed system](./fig/DS104.drawio.png "The architecture of our proposed system")
+<p align="center">
+<img src="[https://raw.githubusercontent.com/quangdaist01/Real-time-people-counting-system-on-AWS-and-Confluent-Cloud/master/fig/DS104.drawio.png](https://raw.githubusercontent.com/quangdaist01/Real-time-people-counting-system-on-AWS-and-Confluent-Cloud/master/fig/DS104.drawio.png)" alt="demo" width="800"/>
+</p>
 
 ## Tools
 
@@ -115,7 +117,9 @@ components in our inferencing system:
 1. Create consumer pods:
     - Run `kubect apply -f consumers.yaml`
 
-![The result](./fig/demo.jpg "The architecture of our proposed system")
+<p align="center">
+<img src="[https://raw.githubusercontent.com/quangdaist01/Real-time-people-counting-system-on-AWS-and-Confluent-Cloud/master/fig/demo.jpg](https://raw.githubusercontent.com/quangdaist01/Real-time-people-counting-system-on-AWS-and-Confluent-Cloud/master/fig/demo.jpg)" alt="demo" width="800"/>
+</p>
 
 ## Demo
 
